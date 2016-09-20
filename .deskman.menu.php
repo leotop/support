@@ -1,0 +1,74 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Мои обращения", 
+		"/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Личный кабинет", 
+		"/personal/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Статистика", 
+		"/statistics/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"SLA", 
+		"/sla/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Сотрудники", 
+		"/staff/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Загрузка", 
+		"/load/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Баланс", 
+		"/balance/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Транзакции", 
+		"/transactions/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Отчет по клиентам", 
+		"/client/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Выход", 
+		"?logout=yes", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

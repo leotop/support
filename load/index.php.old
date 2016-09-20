@@ -1,0 +1,97 @@
+<?
+    require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+    $APPLICATION->SetTitle("Загрузка");
+?>
+
+<?
+    $staff = array();
+    $user = CUser::GetList($by="name", $order="asc", array("GROUPS_ID"=>8));
+    while($arUser = $user->Fetch()) {
+        $staff[$arUser["ID"]] = $arUser; 
+    }
+
+    //arshow($staff);
+
+    $statusSort = array(
+        "0" => 10,
+        "W" => 50,
+        "B" => 80,
+        "N" => 20,
+        "L" => 70,
+        "A" => 30,
+        "G" => 60,
+        "D" => 40
+    );
+
+    $statuses = array();
+
+    $ticketsByUser = array();
+    $tickets = $ticket = Cticket::GetList($by = "ID", $order = "asc", array("CLOSE"=>"N"), $isFiltered,"N", "Y", "Y", false, Array()); 
+    while ($arTicket = $tickets->Fetch()) {
+        if (!$arTicket["STATUS_SID"]) {
+            $arTicket["STATUS_SID"] = "0";
+        }
+        $statuses[$statusSort[$arTicket["STATUS_SID"]]] = $arTicket["STATUS_NAME"];
+        $ticketsByUser[$arTicket["RESPONSIBLE_USER_ID"]][$statusSort[$arTicket["STATUS_SID"]]][] = $arTicket["ID"];
+        // $ticketsByUser[]; 
+    }  
+
+   // arshow($ticketsByUser);
+
+    asort($statuses);
+    reset($statuses);
+
+    $statuses["10"] = "Статус не установлен";
+?>
+
+
+<style>
+    .statTable th, .statTable td {height: auto; padding: 5px; border:1px solid gray;}
+    .statTable th {background: #369D38; text-align: center; font-weight:bold; color:#fff}
+    .monthName {background: #5ADD69 !important;}
+</style>
+
+<table class="statTable">
+    <tr>
+        <th>Сотрудник</th>
+        <?foreach ($statuses as $status){?>
+            <th><?=$status?></th>
+            <?}?>
+            <th>Итого</th>
+    </tr>
+      <?$i = 0;?>
+    <?foreach ($staff as $arUser){?>
+            <?
+            $style="";
+            if ($arUser["ACTIVE"] != "Y") {
+                $style= 'style="background: #FFA8C1;"';
+            }
+            else if ($i%2 != 0) {
+             $style = 'style="background: #efefef;"';   
+            }
+            ?>                                                
+        <tr <?=$style?>>
+            <td><?=$arUser["NAME"]." ".$arUser["LAST_NAME"]?></td>
+              <?$total = 0;?>
+            <?foreach ($statuses as $sID=>$status){?>       
+                <td align="center" >
+                    <?$count = count($ticketsByUser[$arUser["ID"]][$sID]);?>
+                    <?if ($count >= 5){?><b style="font-size:16px; color: red"><?}?>
+                    <?echo $count?>
+                    <?if ($count >= 5){?></b><?}?>
+                </td>
+                <?$total +=  $count;}?>
+                
+                <td align="center">
+                <b <?if ($total >= 10){?> style="font-size:16px; color:red"<?}?>><?=$total?></b>
+                </td>
+
+        </tr>
+
+        <?$i++;}?>
+
+ </table>
+
+
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

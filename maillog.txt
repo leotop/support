@@ -1,0 +1,232 @@
+Array
+(
+    [TO] => lev@santl.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyNzIzXSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66487.49 (15.10.2015 17:00:17)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => mi@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyNzIzXSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66488.51 (15.10.2015 17:00:17)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66489.49 (15.10.2015 17:03:15)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66490.51 (15.10.2015 17:03:15)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66491.49 (15.10.2015 17:04:15)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66492.51 (15.10.2015 17:04:15)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66493.49 (15.10.2015 17:04:19)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66494.51 (15.10.2015 17:04:19)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66495.49 (15.10.2015 17:07:04)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66496.51 (15.10.2015 17:07:04)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66497.49 (15.10.2015 17:07:09)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66498.51 (15.10.2015 17:07:09)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => 1020388t@gmail.com, a.marchenkov@alpinabook.ru, s.kruchkov@alpinabook.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDi4Pjl7CDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_BY_SUPPORT_FOR_AUTHOR
+X-MID: 66499.49 (15.10.2015 17:07:45)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => faster@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyODk5XSBzdXBwb3J0LndlYmdrLnJ1OiDI5+zl7eXt6P8g4iDu4fDg+eXt6Og=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_CHANGE_FOR_TECHSUPPORT
+X-MID: 66500.51 (15.10.2015 17:07:45)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => albert@acz.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyOTAwXSBzdXBwb3J0LndlYmdrLnJ1OiDC4PjlIO7h8OD55e3o5SDv8Ojt//Lu?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_NEW_FOR_AUTHOR
+X-MID: 66501.47 (15.10.2015 17:08:06)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========
+Array
+(
+    [TO] => gk@webgk.ru
+    [SUBJECT] => =?windows-1251?B?W1RJRCMyOTAwXSBzdXBwb3J0LndlYmdrLnJ1OiDN7uLu5SDu4fDg+eXt6OU=?=
+    [BODY] => 
+    [HEADERS] => From: noreply@webgk.ru
+BCC: support@webgk.ru
+Reply-To: noreply@webgk.ru
+X-EVENT_NAME: TICKET_NEW_FOR_TECHSUPPORT
+X-MID: 66502.48 (15.10.2015 17:08:06)
+Content-Type: text/plain; charset=windows-1251
+Content-Transfer-Encoding: 8bit
+)
+
+========

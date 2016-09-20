@@ -1,0 +1,58 @@
+<?
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetTitle("Сотрудники");
+?>
+
+<style>
+    .statTable th, .statTable td {height: auto; padding: 5px; border:1px solid gray;}
+    .statTable th {background: #369D38; text-align: center; font-weight:bold; color:#fff}
+    .monthName {background: #5ADD69 !important;}
+</style>
+
+<script>
+    //функция получения статистика
+    function getUserStat() {
+        var year = $("#year").val();
+        var user = $("#user").val();
+        if (year > 0 /*&& project > 0*/) {
+            $.post("/ajax/getUserStat.php",{year:year, user:user}, function(data){
+                $("#statisticBlock").html(data); 
+            })
+        }
+    }    
+    
+    $(function(){
+        getUserStat();
+    })
+
+</script>
+
+
+
+    Год: 
+    <select id="year" onchange="getUserStat()">   
+        <option value="">-</option>
+        <? for ($i = date("Y"); $i >= 2013; $i--){?>
+            <option value="<?=$i?>" <?if ($i == date("Y")) {?> selected="selected"<?}?>><?=$i?></option>
+            <?}?>
+    </select>
+    &nbsp;
+    Сотрудник:
+    <select id="user" onchange="getUserStat()">
+        <option value="">Все</option>
+        <?
+            $users = CUser::GetList(($by="NAME"), ($order="asc"), array("GROUPS_ID"=> Array(8), /*"ACTIVE"=>"Y"*/), array("SELECT"=>array("UF_*")));
+            while ($arUser = $users->Fetch()) {
+            ?>
+            <option value="<?=$arUser["ID"]?>"><?=$arUser["NAME"]." ".$arUser["LAST_NAME"]?></option>
+            <?}?>
+    </select>
+
+    <div id="statisticBlock">
+        <p>
+            Загрузка...
+        </p>
+    </div>
+ 
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

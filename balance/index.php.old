@@ -1,0 +1,43 @@
+<?
+    require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+    $APPLICATION->SetTitle("Баланс");
+?>
+<?if (in_array(8,CUser::GetUserGroup($USER->GetId()))) { //блок для сотрудников ТП?> 
+    <style>
+        .statTable th, .statTable td {height: auto; padding: 5px; border:1px solid gray;}
+        .statTable th {background: #369D38; text-align: center; font-weight:bold; color:#fff}
+        .monthName {background: #5ADD69 !important;}
+    </style> 
+    <?
+        //собираем клиентов ТП
+        $projectsInfo = array();
+        $projects = CUSer::GetList($by="UF_SITE", $sort="asc",array("ACTIVE"=>"Y", "GROUPS_ID"=>7),array("SELECT"=>array("UF_*")));
+        while ($arProject = $projects->Fetch()) {
+            $projectsInfo[$arProject["ID"]] = $arProject;  
+        }  
+    ?>
+    <table class="statTable">
+        <tr>
+            <th>Клиент</th>
+            <th>Баланс, руб</th>
+        </tr>
+        <? foreach ($projectsInfo as $project) {?>
+            <tr>
+                <td><?=$project["UF_SITE"]?></td>
+                <td><?=$project["UF_BALANCE"]?></td>
+            </tr>
+            <?}?>
+
+    </table>
+    <?} else {?>
+
+
+
+    <?$balance = getUserBalance();
+         if ($balance != '') {
+        ?>
+        Ваш баланс: <?=getUserBalance()?> руб
+        <?}?>
+
+    <?}?>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

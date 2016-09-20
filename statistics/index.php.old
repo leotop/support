@@ -1,0 +1,104 @@
+<?
+    require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+    $APPLICATION->SetTitle("Статистика");
+?>
+<style>
+    .statTable th, .statTable td {height: auto; padding: 5px; border:1px solid gray;}
+    .statTable th {background: #369D38; text-align: center; font-weight:bold; color:#fff}
+    .monthName {background: #5ADD69 !important;}
+</style>
+
+<script>
+    //функция получения статистика
+    function getStat() {
+        var year = $("#year").val();
+        var project = $("#project").val();
+        if (year > 0 /*&& project > 0*/) {
+            $.post("/ajax/getStat.php",{year:year, project:project}, function(data){
+                $("#statisticBlock").html(data); 
+            })
+        }
+    }           
+
+
+    //установка/снятие флага оплаты у тикетов проекта(клиента) client за месяц month года year. status: 1 - оплатить, 0 - отменить оплату
+    //ticketID - номер тикета. если 0 - то все тикеты месяца и года
+    function payTickets(ticketID,month,year,client,status) {
+
+        $.post("/ajax/payTickets.php", {
+            ticket:ticketID,
+            month:month,
+            year:year,
+            client:client,
+            status:status
+            }, function(data){
+                //  alert(data);
+                //перегружаем статистику
+                getStat();    
+        });
+    }
+
+    $(function(){
+        getStat();
+    })
+
+</script>
+
+<?if (in_array(8,CUser::GetUserGroup($USER->GetId()))) { //блок для сотрудников ТП?>    
+
+    Год: 
+    <select id="year" onchange="getStat()">   
+        <option value="">-</option>
+        <? for ($i = date("Y"); $i >= 2013; $i--){?>
+            <option value="<?=$i?>" <?if ($i == date("Y")) {?> selected="selected"<?}?>><?=$i?></option>
+            <?}?>
+    </select>
+    &nbsp;
+    Проект:
+    <?
+        Cmodule::IncludeModule("webgk.support");
+        $suppostGroups = GKSupport::GetBitrixSupportGroup();
+    ?>
+    <select id="project" onchange="getStat()">
+        <option value="">Все</option>
+        <?
+            $users = CUser::GetList(($by="UF_SITE"), ($order="asc"), array("GROUPS_ID"=> Array(7), "ACTIVE"=>"Y"), array("SELECT"=>array("UF_*")));
+            while ($arUser = $users->Fetch()) {
+            ?>
+            <option value="<?=$arUser["ID"]?>">
+            <?
+            if ($suppostGroups[$arUser["ID"]]) {
+                $arUser["UF_SITE"] = "[группа ".$suppostGroups[$arUser["ID"]]."] ".$arUser["UF_SITE"];
+            }
+            ?>
+            <?=$arUser["UF_SITE"]?>
+            </option>
+            <?}?>
+    </select>
+
+    <div id="statisticBlock">
+
+    </div>
+
+
+
+    <?} else { //блок для клиентов?>
+    <input type="hidden" id="project" value="<?=$USER->GetId()?>">
+    Выберите год: 
+    <select id="year" onchange="getStat()">   
+        <option value="">-</option>
+        <? for ($i = date("Y"); $i >= 2013; $i--){?>
+            <option value="<?=$i?>" <?if ($i == date("Y")) {?> selected="selected"<?}?>><?=$i?></option>
+            <?}?>
+    </select>
+
+
+    <div id="statisticBlock"> 
+        <p>
+            Загрузка...
+        </p>
+    </div>
+    <?}?>
+
+
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
