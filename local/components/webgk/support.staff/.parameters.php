@@ -10,6 +10,11 @@
                 'VALUES' => $months,
                 'DEFAULT' => 2,
             ),
+            'YELLOW_ZONE_PERCENT' => array(              
+                'NAME' => GetMessage('YELLOW_ZONE_PERCENT'),
+                'TYPE' => 'STRING',
+                'DEFAULT' => 75,
+            ),
         ),
     );
 ?>

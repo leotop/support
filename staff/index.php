@@ -8,7 +8,8 @@ $APPLICATION->SetTitle("Главная страница");
 	".default", 
 	array(
 		"COMPONENT_TEMPLATE" => ".default",
-		"DEFAULT_MONTH_COUNT" => "2"
+		"DEFAULT_MONTH_COUNT" => "2",
+		"YELLOW_ZONE_PERCENT" => "75"
 	),
 	false
 );?><br>

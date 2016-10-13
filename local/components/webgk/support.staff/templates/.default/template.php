@@ -201,16 +201,58 @@
                                     if (empty($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"])) { $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"] = "00";}
                                 ?>
 
-                                <?    
+                                <?  
+                                    /*  
                                     if ($d == date("d") && $mID == date("m")) {$tdClass = "today";}
                                     else if ((($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] == "0") && ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"] == "00") &&  $mID != date("m")) || (($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] == "0") && ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"] == "00") && ($mID == date("m") && $d < date("d")))){ $tdClass = "emptyDay";} 
-                                        else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] >=5 ) { $tdClass = "high"; } else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]>=4 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]<5) { $tdClass = "middle";} else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]<4) { $tdClass = "low";}  else if (($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]==0 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]>0) || ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"]==0 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]==0) ) {$tdClass = "lowest";}
-                                            else {$tdClass = "";}
+                                    else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] >=5 ) { $tdClass = "high"; } else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]>=4 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]<5) { $tdClass = "middle";} else if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]<4) { $tdClass = "low";}  else if (($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]==0 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]>0) || ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"]==0 && $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"]==0) ) {$tdClass = "lowest";}
+                                    else {$tdClass = "";}
                                     if ($d > date("d") && $mID == date("m")) {$tdClass = "";}
-                                    if ($day==0 || $day==6) {$tdClass = "holiday";}   
+                                    if ($day==0 || $day==6) {$tdClass = "holiday";}   */
+                                    $current_work_minutes = $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"];
+                                    $current_work_hours = $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"];
+
+
+                                    $tdClass = "";
+
+                                    if ($arResult["USERS"][$tID]["WORK_NORM"] == 0) {
+                                        $tdClass = "default"; 
+                                        if ($day==0 || $day==6) {
+                                            $tdClass = "holiday";
+                                        }
+                                        if ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] > 0 
+                                            || $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"] > 0
+                                        ) {
+                                            $tdClass = "high";     
+                                        }                                         
+                                    } else {
+                                        $total_minutes = $current_work_minutes + $current_work_hours * 60;
+                                        if ($total_minutes >=  $arResult["USERS"][$tID]["WORK_NORM"]) {
+                                            $tdClass = "high";
+                                        } else if ($total_minutes < $arResult["USERS"][$tID]["WORK_NORM"] && $total_minutes > ($arResult["USERS"][$tID]["WORK_NORM"] * $arResult["YELLOW_ZONE_PERCENT"] / 100)) {
+                                            $tdClass = "middle";
+                                        } else {
+                                            $tdClass = "low";
+                                        }    
+                                    }
+                                    //future
+                                    if ($d > date("d") && $mID == date("m")) {                                         
+                                        $tdClass = "";
+                                        if ($arResult["USERS"][$tID]["WORK_NORM"] == 0) {
+                                            $tdClass = "default"; 
+                                        }
+                                    }
+
+                                    if ($day==0 || $day==6) {
+                                        $tdClass = "holiday";
+                                    } 
+                                    
+                                    if ($d == date("d") && $mID == date("m")) {
+                                        $tdClass = "today";
+                                    }
                                 ?>
 
-                                <td align="center" class="<?=$tdClass?>">
+                                <td align="center" class="<?=$tdClass?>" >
 
                                     <?  if ((($d <= date("d") && $mID == date("m")) || $mID < date("m") || $mID > date("m")) && (($day != 0 && $day !=6) || ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"] != "0") || ($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"] != "00")) /*&& ($day != 0 && $day !=6)*/) {    
                                             echo $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"].":".$arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"];

@@ -160,8 +160,26 @@
         $arResult["FILTER"][">=DATE"]=date("d.m.Y", strtotime($ticketFilter[">=DATE"]));
         $arResult["FILTER"]["<=DATE"]=date("d.m.Y", strtotime($ticketFilter["<=DATE"]));
 
+        //users work norms
+        $user_norms = new GKSupportNorms;
+        $default_norm = $user_norms->GetDefault() * 60;
+        $rsUserNorms = $user_norms->GetList($by = "ID", $sort = "ASC", array());   
+        while($arUserNorm = $rsUserNorms->Fetch()) {
+            $arResult["USERS"][$arUserNorm["EMPLOYE_ID"]]["WORK_NORM"] = $arUserNorm["HOURS"] * 60;    
+        }      
+
+        foreach ($arResult["USERS"] as $uID => $user) {   
+            if (strlen($user["WORK_NORM"]) <= 0) {
+                $arResult["USERS"][$uID]["WORK_NORM"] = $default_norm; 
+            }
+        }    
+        
+        $arResult["YELLOW_ZONE_PERCENT"] = intval($arParams["YELLOW_ZONE_PERCENT"]);
+        if (empty($arResult["YELLOW_ZONE_PERCENT"])) {
+            $arResult["YELLOW_ZONE_PERCENT"] = 0;
+        }
+
         $this->IncludeComponentTemplate();
     } else {
         $arResult='';
     }
-

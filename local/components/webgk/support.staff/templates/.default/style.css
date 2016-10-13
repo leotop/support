@@ -4,9 +4,9 @@
 .date-input {display: inline-block;}
 .emptyDay {background: #efefef;}
 .holiday {background: #C4C4C4;}
-.today {background: #E1C300;}
+.today {background: #E1C300; border-left: 2px solid #000 !important ; border-right: 2px solid #000 !important; color: #000}
 .high { background: #5ADD69;}   
 .middle {background: #FFED7A;}   
 .low {background: #FF828A;}   
 .lowest{background: #efefef; }
-    
+.default {background: #97D3E3;}    
