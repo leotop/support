@@ -208,7 +208,7 @@ class SupportPush {
 	 * */
 	private function checkSeventhCase($tickets) {
 		$this->current_test_case = 7;
-		$case_message_template = '- <a href="http://support.webgk.ru/?ID=#ID#&edit=1">##ID#</a>: необходимо вернуться к работе;<br>';
+		$case_message_template = '- <a href="http://support.webgk.ru/?ID=#ID#&edit=1">##ID#</a>: необходимо вернуться к работе и отметить флаг "Работаю";<br>';
 		$filtered_tickets = array_filter($tickets, [$this, 'filterTickets']);
 		if (!empty($filtered_tickets)) {
 			$this->addCaseMessages($case_message_template, $filtered_tickets);

@@ -1,0 +1,99 @@
+.ticket-tracking-container {
+    position:fixed;
+    width:500px;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #000;
+    border: 1px solid #000;
+    background: #fff;
+    left: 50%;
+    margin-left: -250px;
+    top: 150px;      
+    display:block;
+    border-radius: 5px;
+    display: none;
+}
+
+.ticket-tracking-container p, .ticket-tracking-container p span {
+    font-size :12px !important;
+    margin: 0;
+}
+
+.total-ticket-count {
+    color: green
+}
+
+.total-ticket-count-in-work {
+    color: red
+}
+
+.ticket-tracking-container ul {
+    margin: 0;
+    padding: 0;
+}
+
+.ticket-tracking-container ul li {
+    list-style: none; 
+    margin: none;
+    margin: 0;
+    padding: 0;
+    font-size :12px !important;
+}
+
+.ticket-tracking-title {
+    font-size: 14px;
+}
+
+.ticket-tracking-close {
+    width: 20px;
+    height: 20px;
+    border-radius: 11px;
+    border: 1px solid #000;
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer
+}
+
+.ticket-tracking-close:hover {
+    border-color: red;
+    color: red;
+}
+
+.ticket-tracking-button {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 160px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 20px 0 0 0;
+    background: green;
+    opacity: 0.5;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+
+.ticket-tracking-button b {
+    color: #fff
+}
+
+.ticket-tracking-button:hover {
+    opacity: 1;
+    cursor:pointer
+}
+
+.ticket-tracking-free-users {      
+    line-height: 20px;
+    font-weight: 100;
+}
+
+.ticket-tracking-free-users span {
+    display: inline-block;
+    width: 49%;
+    text-align: left;
+    font-size: 12px !important;
+}

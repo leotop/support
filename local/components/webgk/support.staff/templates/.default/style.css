@@ -1,0 +1,12 @@
+.statTable th, .statTable td {height: auto; padding: 5px; border:1px solid gray;}
+.statTable th {background: #369D38; text-align: center; font-weight:bold; color:#fff}
+.monthName {background: #5ADD69 !important;}
+.date-input {display: inline-block;}
+.emptyDay {background: #efefef;}
+.holiday {background: #C4C4C4;}
+.today {background: #E1C300;}
+.high { background: #5ADD69;}   
+.middle {background: #FFED7A;}   
+.low {background: #FF828A;}   
+.lowest{background: #efefef; }
+    

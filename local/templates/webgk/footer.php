@@ -80,5 +80,12 @@ false
 		</table>
 </tr>
 </table>
+<?$APPLICATION->IncludeComponent("webgk:support.user.reports", "", array());?>
+<?$APPLICATION->IncludeComponent(
+    "webgk:support.ticket.tracking", 
+    "", 
+    array("WORK_STATUS_ID" => "W", "TICKET_PAGE_URL" => "/?ID=#TICKET_ID#&edit=1"),
+    false
+    );?>
 </body>
 </html>

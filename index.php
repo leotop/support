@@ -32,6 +32,7 @@
 		"AJAX_OPTION_ADDITIONAL" => "",
 		"COMPONENT_TEMPLATE" => ".default",
 		"TICKET_LIST_URL" => "/",
+		"WORK_STATUS_ID" => "W",
 		"VARIABLE_ALIASES" => array(
 			"ID" => "ID",
 		)
