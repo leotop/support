@@ -15,6 +15,12 @@
                 'TYPE' => 'STRING',
                 'DEFAULT' => 75,
             ),
+            'TICKET_PAGE_URL'  => array(
+                'NAME' => GetMessage("TICKET_PAGE_URL"),
+                'TYPE' => 'STRING',
+                'PARENT' => 'BASE',
+                'DEFAULT' => '/?ID=#TICKET_ID#&edit=1'
+            ),
         ),
     );
 ?>

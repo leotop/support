@@ -246,7 +246,7 @@
                                     if ($day==0 || $day==6) {
                                         $tdClass = "holiday";
                                     } 
-                                    
+
                                     if ($d == date("d") && $mID == date("m")) {
                                         $tdClass = "today";
                                     }
@@ -259,7 +259,77 @@
                                             if ($tdClass != "emptyDay") {
                                             ?>
                                             <br>
-                                            [<?echo count($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["TICKETS"])?>]
+                                            <a href="javascript:void(0)" class="show-info-link">[<?echo count($arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["TICKETS"])?>]</a>
+
+                                            <div class="info-popup-container">
+                                                <div class="ticket-tracking-close">&#10006;</div>
+
+                                                <div>
+                                                    <p class="popup-user-name"><span><?=$arResult["USERS"][$tID]["NAME"]." ".$arResult["USERS"][$tID]["LAST_NAME"]?></span> [<?=$d.".".$mID.".".$yID?>]</p>
+                                                    <? $day_tickets = $arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["TICKETS"];
+                                                        if (is_array($day_tickets) && count($day_tickets) > 0) {?>
+                                                        <table>
+                                                            <?foreach ($day_tickets as $t_id => $ticket) {?>
+                                                                <tr>
+                                                                    <td width="10%">
+                                                                        [<?=$t_id?>]
+                                                                    </td>
+
+                                                                    <td>  
+                                                                        <?if ($ticket["LINK"]) {?><a href="<?=$ticket["LINK"]?>" target="_blank"><?}?>
+                                                                            <?=$arResult["ALL_TICKETS"][$t_id]["TITLE"]?>
+                                                                        <?if ($ticket["LINK"]) {?></a><?}?> 
+                                                                    </td>  
+
+                                                                    <td class="ticket-time" width="10%">
+                                                                        <?=$ticket["HOURS"].":".$ticket["MINUTES"]?>
+                                                                    </td> 
+                                                                </tr>
+                                                                <?}?>  
+
+                                                            <tr>
+                                                                <td colspan="2" align="right">
+                                                                        <?=GetMessage('SUPPORT_TOTAL')?>:
+                                                                </td>
+
+                                                                <td>
+                                                                    <b style="color: green;">
+                                                                        <?=$arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_HOURS"].":".$arResult["STAT_TIME"][$yID][$mID][$tID]["DAILY_STAT"][$d]["USER_MINUTES"];?>
+                                                                    </b>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="2" align="right">
+                                                                        <?=GetMessage('USER_NORM')?>:
+                                                                </td>
+
+                                                                <td>
+                                                                    <b style="color: red;">
+                                                                       <?=$arResult["WORK_NORMS"][$tID]?>
+                                                                    </b>
+                                                                </td>
+                                                            </tr>
+
+
+                                                        </table>    
+                                                        <?} else {?>
+                                                        <p><?=GetMessage("NO_TICKETS")?></p>
+                                                        <?}?>
+                                                    <hr />
+                                                    <?if ($arResult["USERS"][$tID]["WORK_NORM"] == 0 || $total_minutes >=  $arResult["USERS"][$tID]["WORK_NORM"]) {?>
+                                                        <p><b style="color: green"><?=GetMessage("REPORT_NOT_REQUIRED")?></b></p>
+                                                        <?} else if ($total_minutes < $arResult["USERS"][$tID]["WORK_NORM"]) {?>
+                                                        <?if ($arResult["REPORTS"][$tID][$d.".".$mID.".".$yID]) {?>
+                                                            <p><b style="color: red"><?=GetMessage("REPORT")?>:</b><br /> <?=$arResult["REPORTS"][$tID][$d.".".$mID.".".$yID];?></p>
+                                                            <?} else {?>
+                                                            <p><b style="color: red"><?=GetMessage("REPORT_NOT_EXISTS")?></b></p>
+                                                            <?}?>
+                                                        <?}?>
+                                                </div>
+
+                                            </div>
+
                                             <?}?>
                                         <?}?>
 

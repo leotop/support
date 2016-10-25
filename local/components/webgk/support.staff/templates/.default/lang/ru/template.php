@@ -30,5 +30,8 @@ $MESS['SUPPORT_GROUPS'] = "Группа ";
 $MESS['SUPPORT_TITLE_STAFF'] = "показать статистику по сотруднику";
 $MESS['SUPPORT_RESET'] = "Сбросить";
 $MESS['SUPPORT_MAIN_TITLE'] = "Статистика по сотрудникам";
-
-?>
+$MESS["NO_TICKETS"] = "Работы по тикетам не выполнялись";
+$MESS["REPORT_NOT_REQUIRED"] = "Отчет не требуется";
+$MESS["REPORT_NOT_EXISTS"] = "Отчет отсутствует";
+$MESS["REPORT"] = "Причина невыполнения нормы";
+$MESS["USER_NORM"] = "Норма часов";

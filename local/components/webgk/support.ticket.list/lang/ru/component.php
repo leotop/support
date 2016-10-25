@@ -13,4 +13,7 @@ $MESS["SUP_RED"] = "красный";
 $MESS["SUP_GREEN"] = "зеленый";
 $MESS["SUP_GREY"] = "серый";
 $MESS["SUP_YELLOW"] = "желтый";
+$MESS["TICKET_LOG_ACTION_ADD"] = "В плане";
+$MESS["TICKET_LOG_ACTION_UPDATE"] = "Комментарий";
+$MESS["TICKET_LOG_ACTION_DELETE"] = "Удален";
 ?>

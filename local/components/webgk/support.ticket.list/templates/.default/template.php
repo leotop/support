@@ -46,27 +46,31 @@ $(function() {
 <?  
     //Forming table headers
     $ticketListHeader=array(
-        array("id"=>"LAMP", "name"=> GetMessage('SUP_LAMP'), "sort"=>"s_lamp", "default"=>true),
+        array("id"=>"LAMP", "name"=> GetMessage('SUP_LAMP'), "sort"=>"s_lamp", "default"=>true, "align"=>"center"),
         array("id"=>"ID", "name"=>GetMessage('SUP_ID'), "sort"=>"s_id", "default"=>true),
         array("id"=>"TITLE", "name"=>GetMessage('SUP_TITLE'), "default"=>true),
-        array("id"=>"TIMESTAMP_X", "name"=>GetMessage('SUP_TIMESTAMP'), "sort"=>"s_timestamp_x", "default"=>true),
+        array("id"=>"TIMESTAMP_X", "name"=>GetMessage('SUP_TIMESTAMP'), "sort"=>"s_timestamp_x", "default"=>true, "align"=>"center"),
         array("id"=>"RESPONSIBLE_HTML_NAME_S", "name"=>GetMessage('SUP_RESPONSIBLE'), "default"=>true),
-        array("id"=>"MESSAGES", "name"=>GetMessage('SUP_MESSAGES'),  "default"=>true),
-        array("id"=>"STATUS_NAME", "name"=>GetMessage('SUP_STATUS'), "default"=>true),
+        array("id"=>"MESSAGES", "name"=>GetMessage('SUP_MESSAGES'),  "default"=>true, "align"=>"center"),
+        array("id"=>"STATUS_NAME", "name"=>GetMessage('SUP_STATUS'), "default"=>true, "align"=>"center"),
         array("id"=>"OWNER_HTML_NAME_S", "name"=>GetMessage('SUP_OWNER'), "default"=>true),
-        array("id"=>"UF_SPEND_TIME", "name"=>GetMessage('SUP_TIME'), "default"=>true),
-        array("id"=>"CRITICALITY_NAME", "name"=>GetMessage('SUP_CRITICALITY'), "default"=>true),
-        array("id"=>"DATE_CREATE", "name"=>GetMessage('SUP_DATE_CREATE'),"sort"=>"date_create", "default"=>true),
+        array("id"=>"UF_SPEND_TIME", "name"=>GetMessage('SUP_TIME'), "default"=>true, "align"=>"center"),
+        array("id"=>"CRITICALITY_NAME", "name"=>GetMessage('SUP_CRITICALITY'), "default"=>true, "align"=>"center"),
+        array("id"=>"DATE_CREATE", "name"=>GetMessage('SUP_DATE_CREATE'),"sort"=>"date_create", "default"=>true, "align"=>"center"),
         array("id"=>"NEED_TESTING", "name"=>GetMessage('SUP_TESTING'), "align"=>"center", "default"=>true)
     );
+    
+    //if user support admin or site admin
+    if ($bAdmin == "Y" || $USER->IsAdmin()) {
+       $ticketListHeader[] = array("id"=>"SUP_PLAN", "name"=>GetMessage('SUP_PLAN'), "align"=>"center", "default"=>true); 
+    }
     
     /*Show testing only for support employer
     if($arResult["IS_STAFF"]=='Y') {
         $ticketListHeader[]=array("id"=>"NEED_TESTING", "name"=>GetMessage('SUP_TESTING'), "align"=>"center", "default"=>true);
-    }*/
-
-
-
+    }*/    
+    
+   
     $APPLICATION->IncludeComponent(
         "webgk:main.interface.grid",
         "",
@@ -82,6 +86,9 @@ $(function() {
             "NAV_OBJECT"=>$arResult["NAV_OBJECT"],
             "AJAX_ID"=>$arParams["AJAX_ID"],
             "FILTER"=>$arResult["FILTER"],
+            "TICKET_PLAN"=>$arResult["TICKET_PLAN"],
+            "IS_STAFF"=>$arResult["IS_STAFF"],
+            "TICKET_PLAN_LOG"=>$arResult["TICKET_PLAN_LOG"], 
         ),
         $component
     );

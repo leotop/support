@@ -133,3 +133,112 @@ td.popupmenu div.popupitem div.grid-sort-asc {background-image:url(images/icons/
 td.popupmenu div.popupitem div.grid-sort-desc {background-image:url(images/icons/sort_desc.gif);}
 td.popupmenu div.popupitem div.grid-themes {background-image:url(images/icons/themes.gif);}
 td.popupmenu div.popupitem div.grid-views {background-image:url(images/icons/views.gif);}
+
+.ticket-plan-wrapper {
+    width: 40px;
+}
+
+.ticket-plan {        
+    font-size: 20px;
+    cursor:pointer;   
+}
+
+.ticket-plan-block {
+    width: 17px;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    float:left
+}
+
+.ticket-plan.plan-yes {
+    color: red;
+}
+
+.ticket-plan.plan-no {
+    color: green;
+}
+
+.ticket-plan-history {    
+    border: 1px solid #aaa;
+    border-radius: 9px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: times new roman;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 5px;
+    overflow: hidden;
+}
+
+.ticket-plan-history:hover {
+    color: #000;
+    border-color: #000;
+}
+
+.ticket_plan_popup {
+    position:fixed;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #000;
+    border: 1px solid #000;
+    background: #fff;
+    left: 50%;       
+    top: 150px;      
+    border-radius: 5px;
+    display: none;
+    width: 500px;
+    margin-left: -250px;  
+    text-align: left;     
+}     
+
+.ticket_plan_popup p {
+    text-align: left;
+}
+
+.ticket_plan_popup textarea {
+    width: 100%;
+    height: 50px;
+    resize: none;
+}
+
+.ticket_plan_popup button {
+    margin: 10px 0 0;
+    cursor: pointer;
+}
+
+.ticket-tracking-close {
+    width: 20px;
+    height: 20px;
+    border-radius: 11px;
+    border: 1px solid #000;
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer
+}
+
+.ticket-in-plan {
+    background: #FFD09D;
+}
+
+.popup-ticket-log-table {
+    font-size: 12px;
+    width:100%;
+}
+
+.popup-ticket-log-container {
+    width:100%;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.popup-ticket-log-table td {
+    vertical-align: middle !important;
+    border-bottom: 1px solid #aaa !important;
+    text-align: left;
+}

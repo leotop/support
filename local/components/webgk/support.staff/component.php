@@ -10,53 +10,60 @@
 
     if ($arParams["DEFAULT_MONTH_COUNT"] == "") {$arParams["DEFAULT_MONTH_COUNT"] = 1;}
 
-    function calculateTime ($Year, $Month, $Day, $user, $time, $arResult, $key, $ticketID) {
+    function calculateTime ($Year, $Month, $Day, $user, $time, $arResult, $key, $ticketID, $ticket_link) {
         $oneHour = 1;
         $oneHourInMinutes = 60;
         //Calculate user time
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key]+$time["HOURS"];
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key]+$time["MINUTES"];
-        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key]>=$oneHourInMinutes) {
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key]+$oneHour;
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key]-$oneHourInMinutes;
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key] += $time["HOURS"];
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key] += $time["MINUTES"];
+        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_HOURS".$key] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["USER_MINUTES".$key] -= $oneHourInMinutes;
         }
         //Calculate ticket time  
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key]+$time["HOURS"];
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key]+$time["MINUTES"];
-        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key]>=$oneHourInMinutes) {
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key]+$oneHour;
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key]-$oneHourInMinutes;
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key] += $time["HOURS"];
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key] += $time["MINUTES"];
+        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_HOURS".$key ] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]][$time["TICKET_ID"]]["TIME"]["TICKET_MINUTES".$key] -= $oneHourInMinutes;
         }  
         //Calculate month time
-        $arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key]+$time["HOURS"];
-        $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key]+$time["MINUTES"];
-        if( $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key]>=$oneHourInMinutes) {
-            $arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key]+$oneHour;
-            $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key]-$oneHourInMinutes;  
+        $arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key] += $time["HOURS"];
+        $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key] += $time["MINUTES"];
+        if( $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month]["MONTH_HOURS".$key] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month]["MONTH_MINUTES".$key] -= $oneHourInMinutes;  
         } 
 
 
 
         //Calculate client time
-        $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key]+$time["HOURS"];
-        $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key]+$time["MINUTES"];
-        if( $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key]>=$oneHourInMinutes) {
-            $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key]+$oneHour;
-            $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key]-$oneHourInMinutes;
+        $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key] += $time["HOURS"];
+        $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key] += $time["MINUTES"];
+        if( $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_HOURS".$key] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month][$time["CLIENT_ID"]]["CLIENT_MINUTES".$key] -= $oneHourInMinutes;
         }
 
         //Calculate daily time
 
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key]+$time["HOURS"];
-        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key]+$time["MINUTES"];
-        if (!in_array($ticketID, $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"])) {
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][] = $ticketID;
-        }
-        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key]>=$oneHourInMinutes) {
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key]+$oneHour;
-            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key]=$arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key]-$oneHourInMinutes;
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key] += $time["HOURS"];
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key] += $time["MINUTES"];
+
+        //daily stat by ticketss
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["MINUTES".$key] += $time["MINUTES"];
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["HOURS".$key] += $time["HOURS"];
+        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["HOURS".$key] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["MINUTES".$key] -= $oneHourInMinutes;
         }
 
+        $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["TICKETS"][$ticketID]["LINK"] = $ticket_link; 
+
+        if( $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key] >= $oneHourInMinutes) {
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_HOURS".$key] += $oneHour;
+            $arResult["STAT_TIME"][$Year][$Month][$user["ID"]]["DAILY_STAT"][intval($Day)]["USER_MINUTES".$key] -= $oneHourInMinutes;
+        }      
 
 
         return $arResult;
@@ -119,22 +126,29 @@
         $filter["GROUPS_ID"] = $supportId;
         $rsUsers = CUser::GetList(($by="name"), ($order="asc"), $filter);
 
-        while($user = $rsUsers->Fetch()) { 
+        while($user = $rsUsers->Fetch()) {
+            
+            $work_norm = GKSupportNorms::GetUserNorm($user["ID"]);
+            $work_norm = intval($work_norm). ":" .($work_norm * 60) % 60;
+            $arResult["WORK_NORMS"][$user["ID"]] = $work_norm;
+                                                
             $arResult["USERS"][$user["ID"]]=$user;
             $ticketFilter["USER_ID"]=$user["ID"];
             $obTime = GKSupportSpentTime::GetList(($by="id"), ($order="desc"), $ticketFilter); 
             while($time = $obTime->Fetch()) {
+                $arResult["ALL_TICKETS"][$time["TICKET_ID"]] = $time["TICKET_ID"];
                 $inPayment = GKSupportTicketPayment::GetByTicket($time["TICKET_ID"]);
                 $time["IN_PAYMENT"]=$inPayment;
                 $Month = substr($time["DATE"],5,2); 
                 $Year = substr($time["DATE"],0,4); 
                 $Day =  substr($time["DATE"],8,2);
-                //                arshow($Day);
-                $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '', $time["TICKET_ID"]);
+                //arshow($Day);
+                $ticket_link = str_replace("#TICKET_ID#", $time["TICKET_ID"], $arParams["TICKET_PAGE_URL"]);
+                $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '', $time["TICKET_ID"], $ticket_link);
                 if ($inPayment=="Y") {
-                    $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '_IN_PAY', $time["TICKET_ID"]);
+                    $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '_IN_PAY', $time["TICKET_ID"], $ticket_link);
                     if ($time["IS_PAYED"]=="Y"){
-                        $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '_PAYED', $time["TICKET_ID"]);
+                        $arResult=calculateTime($Year, $Month, $Day, $user, $time, $arResult, '_PAYED', $time["TICKET_ID"], $ticket_link);
                     }
                 } 
                 if (!empty($_REQUEST["user"])) {
@@ -173,13 +187,45 @@
                 $arResult["USERS"][$uID]["WORK_NORM"] = $default_norm; 
             }
         }    
-        
+
         $arResult["YELLOW_ZONE_PERCENT"] = intval($arParams["YELLOW_ZONE_PERCENT"]);
         if (empty($arResult["YELLOW_ZONE_PERCENT"])) {
             $arResult["YELLOW_ZONE_PERCENT"] = 0;
         }
 
+        if (is_array($arResult["ALL_TICKETS"]) && count($arResult["ALL_TICKETS"]) > 0) {
+            $ticket_id = $arResult["ALL_TICKETS"]; 
+            $full_ticket_list = CTicket::GetList($by = "ID", $sort = "ASC", array("ID" => $ticket_id, "ID_EXACT_MATCH" => "Y"));
+            while ($arTicket = $full_ticket_list->Fetch()) {
+                $arResult["ALL_TICKETS"][$arTicket["ID"]] = $arTicket; 
+            }
+        }
+
+
+        //get user reports
+        if (!empty($arResult["FILTER"][">=DATE"])){
+            $arrDate = ParseDateTime($arResult["FILTER"][">=DATE"], "DD.MM.YYYY");
+            $report_filter[">=DATE"] = $arrDate["YYYY"] . "." . $arrDate["MM"] . "." . $arrDate["DD"] . " 00:00:00";  
+        }
+        if (!empty($arResult["FILTER"]["<=DATE"])) {
+            $arrDate = ParseDateTime($arResult["FILTER"]["<=DATE"], "DD.MM.YYYY");
+            $report_filter["<=DATE"] = $arrDate["YYYY"] . "." . $arrDate["MM"] . "." . $arrDate["DD"] . " 23:59:59";
+        }
+
+        //set sorting field and direction
+        $by = "ID";
+        $order = "DESC";            
+
+        //get discounts list
+        $cData = new GKSupportReports;
+        $rsData = $cData->GetList($by, $order, $report_filter); 
+        while($arReport = $rsData->Fetch()) {
+            $date = explode("-", $arReport["DATE"]);
+            $arResult["REPORTS"][$arReport["EMPLOYE_ID"]][intval($date[2]).".".$date[1].".".$date[0]] = $arReport["TEXT"];
+        }
+
+
         $this->IncludeComponentTemplate();
     } else {
         $arResult='';
-    }
+}

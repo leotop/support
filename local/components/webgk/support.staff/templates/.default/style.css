@@ -9,4 +9,63 @@
 .middle {background: #FFED7A;}   
 .low {background: #FF828A;}   
 .lowest{background: #efefef; }
-.default {background: #97D3E3;}    
+.default {background: #97D3E3;}  
+.show-info-link {color: #4D4D4D}  
+.info-popup-container {
+    position:fixed;
+    width:500px;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #000;
+    border: 1px solid #000;
+    background: #fff;
+    left: 50%;
+    margin-left: -250px;
+    top: 150px;      
+    border-radius: 5px;
+    display: none;
+}
+
+.ticket-tracking-close {
+    width: 20px;
+    height: 20px;
+    border-radius: 11px;
+    border: 1px solid #000;
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer
+}
+
+.info-popup-container p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.popup-user-name span{
+    font-weight: bold;
+    color: green
+}
+
+.popup-ticket-time {
+    width:40px;
+    display: inline-block;
+    color: red
+}
+
+.info-popup-container table {
+    width: 100%;
+}
+
+.info-popup-container table td {
+    border: none;
+    vertical-align: top;
+    padding: 0 5px;
+}
+
+.info-popup-container table td.ticket-time {
+    color: red;
+}

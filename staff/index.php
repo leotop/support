@@ -9,7 +9,8 @@ $APPLICATION->SetTitle("Главная страница");
 	array(
 		"COMPONENT_TEMPLATE" => ".default",
 		"DEFAULT_MONTH_COUNT" => "2",
-		"YELLOW_ZONE_PERCENT" => "75"
+		"YELLOW_ZONE_PERCENT" => "75",
+		"TICKET_PAGE_URL" => "/?ID=#TICKET_ID#&edit=1"
 	),
 	false
 );?><br>

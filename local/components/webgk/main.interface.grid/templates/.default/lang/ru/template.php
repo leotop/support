@@ -116,6 +116,12 @@ $MESS["inerface_grid_days"] = "дн.";
 $MESS["interface_grid_common"] = "Общие настройки";
 $MESS["interface_grid_common_default"] = "Установить данные настройки по умолчанию";
 $MESS["interface_grid_common_default_apply"] = "Заменить все настройки пользователей данными настройками";
-$MESS ['SUP_ERROR'] = "Произошла ошибка при загрузке данных!";
-
+$MESS['SUP_ERROR'] = "Произошла ошибка при загрузке данных!";
+$MESS["ADD_TO_PLAN"] = "Добавить в план";
+$MESS["REMOVE_FROM_PLAN"] = "Убрать из плана";
+$MESS["SHOW_HISTORY"] = "Показать историю изменения";
+$MESS["REASON_OF_CANCEL"] = "Укажите причину удаления тикета из плана";
+$MESS["CANCEL_TICKET_PLAN"] = "Убрать из плана";
+$MESS["TICKET_PLAN_HISTORY"] = "История изменений";
+$MESS["ADD_TICKET_COMMENT"] = "Добавить коментарий";
 ?>

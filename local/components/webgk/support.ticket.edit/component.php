@@ -179,27 +179,32 @@
                     $ticket_work_status = new GKSupportTicketTracking; 
                     $arTicketWorking = $ticket_work_status->GetList($by = "ID", $sort = "ASC", array("TICKET_ID" => $ID, "USER_ID" => $arTicket["RESPONSIBLE_USER_ID"]))->Fetch();
 
-                    //responsible changing, current user is not responsible
+                    //responsible changing
                     if (!empty($arFields["RESPONSIBLE_USER_ID"]) && $arFields["RESPONSIBLE_USER_ID"] != $arTicket["RESPONSIBLE_USER_ID"]) {                         
-                        if (!empty($arTicketWorking) || $arFields["RESPONSIBLE_USER_ID"] != $uID) {
+                        if ((!empty($arTicketWorking) || $arFields["RESPONSIBLE_USER_ID"] != $uID) && ($USER->IsAdmin() || $supportStaff)) {
                             $ticket_work_status->DeleteByTicket($ID); 
                         }
-                    //responsible changing, current user is responsible    
-                    } else if (!empty($arFields["RESPONSIBLE_USER_ID"]) && $arFields["RESPONSIBLE_USER_ID"] == $arTicket["RESPONSIBLE_USER_ID"]) {                          
-                        if (empty($arTicketWorking)) {
-                            $ticket_work_status->Add(array("TICKET_ID" => $ID, "USER_ID" => $uID)); 
-                        }
-                    //responsible not changing    
-                    } 
 
+                        //status changing, responsible not changing    
+                    } else if ((!empty($arFields["RESPONSIBLE_USER_ID"]) 
+                        && $arFields["RESPONSIBLE_USER_ID"] == $arTicket["RESPONSIBLE_USER_ID"]
+                        && $arFields["STATUS_SID"] != $arTicket["STATUS_SID"])
+                        || (empty($arFields["RESPONSIBLE_USER_ID"]) && $arFields["STATUS_SID"] != $arTicket["STATUS_SID"])
+                        ) {                          
+                            if (empty($arTicketWorking) && $arTicket["RESPONSIBLE_USER_ID"] == $uID) {
+                                $ticket_work_status->Add(array("TICKET_ID" => $ID, "USER_ID" => $arTicket["RESPONSIBLE_USER_ID"])); 
+                            }
+                    }          
                 } else {
-                    //remove ticket to work statistics
+                    //remove ticket from tracking
                     $ticket_work_status = new GKSupportTicketTracking; 
                     $arTicketWorking = $ticket_work_status->GetList($by = "ID", $sort = "ASC", array("TICKET_ID" => $ID, "USER_ID" => $uID))->Fetch();
-                    if (!empty($arTicketWorking) || $arFields["RESPONSIBLE_USER_ID"] != $uID) {
+                    if ((!empty($arTicketWorking) || $arFields["RESPONSIBLE_USER_ID"] != $uID) && ($USER->IsAdmin() || $supportStaff)) {
                         $ticket_work_status->DeleteByTicket($ID); 
                     }
                 }
+                
+                
 
 
                 $ID = CTicket::SetTicket($arFields, $ID, $checkRights, $NOTIFY = "Y");

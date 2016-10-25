@@ -85,8 +85,8 @@
             }       
 
             //array of dates without reports
-            $dates_without_reports = array();
-            $dates_without_reports["USER_NORM"] = $user_norm;
+            $result = array();
+            $result["USER_NORM"] = $user_norm;
 
             //check reports for dates
             foreach ($dates_to_check as $date) {  
@@ -119,13 +119,13 @@
 
                     //if date has no report
                     if (empty($arReport)) {
-                        $dates_without_reports["DATES"][] = array("DATE" => $date, "TIME" => $full_time); 
+                        $result["DATES"][] = array("DATE" => $date, "TIME" => $full_time); 
                     }
                 }
             }
 
-            if (!empty($dates_without_reports)) {
-                return $dates_without_reports;
+            if (!empty($result)) {
+                return $result;
             } else {
                 return false;
             }
@@ -136,11 +136,11 @@
         }
     }
 
-    $dates = checkUserReposts($user_id);      
+    $reports = checkUserReposts($user_id);      
 
-    $arResult["DATES"] = $dates["DATES"];    
+    $arResult["DATES"] = $reports["DATES"];    
     //format user norm
-    $arResult["USER_NORM"] = intval($dates["USER_NORM"]). ":" .($dates["USER_NORM"] * 60) % 60;     
+    $arResult["USER_NORM"] = intval($reports["USER_NORM"]). ":" .($reports["USER_NORM"] * 60) % 60;     
 
     $this->IncludeComponentTemplate();
 ?>

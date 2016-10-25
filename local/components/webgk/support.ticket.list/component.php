@@ -21,7 +21,7 @@
 
     //Permissions
     if ( !($USER->IsAuthorized() && (CTicket::IsSupportClient() || CTicket::IsAdmin() || CTicket::IsSupportTeam() || CTicket::IsDemo())) )
-        $APPLICATION->AuthForm(GetMessage("ACCESS_DENIED"));
+        $APPLICATION->AuthForm(GetMessage("ACCESS_DENIED"));         
 
 
     $bADS = $bDemo == 'Y' || $bAdmin == 'Y' || $bSupportTeam == 'Y';
@@ -58,12 +58,41 @@
         "TICKETS" => Array(),
     );
 
+
+
     //Check is user is in staff group
     $uID = $USER->GetId();
     $supportStaffGroupID = GKSupport::GetSupportEmployerGroupID();
     $supportStaff = in_array($supportStaffGroupID,CUser::GetUserGroup($uID)); 
     if ($supportStaff===true) {
         $arResult["IS_STAFF"]='Y';
+    }
+    
+    $staff_user_list = CUser::GetList($by = "ID", $sort = "ASC", array("GROUPS_ID" => $supportStaffGroupID));
+    while($arUser = $staff_user_list->Fetch()) {
+        $arResult["STAFF_LIST"][$arUser["ID"]] = $arUser;
+    }
+
+    //AJAX UPDATE
+    if ($_REQUEST["AJAX"] == "YES" && $_REQUEST["ACTION"] && intval($_REQUEST["TICKET_ID"]) > 0) {
+        switch ($_REQUEST["ACTION"]) {
+            case "ADD": 
+                $ticket_plan = new GKSupportTicketPlan;
+                $ticket_plan->Add(array("TICKET_ID" => intval($_REQUEST["TICKET_ID"])));
+                break;
+
+            case "DELETE":
+                $text = iconv("UTF-8", "CP1251", $_REQUEST["COMMENT"]);
+                $ticket_plan = new GKSupportTicketPlan;
+                $ticket_plan->DeleteByTicket(intval($_REQUEST["TICKET_ID"]), $text);
+                break;
+
+            case "UPDATE": 
+                $text = iconv("UTF-8", "CP1251", $_REQUEST["COMMENT"]);
+                $ticket_plan = new GKSupportTicketPlan;
+                $ticket_plan->Update(intval($_REQUEST["TICKET_ID"]), array("COMMENT" => $text));
+                break;
+        }
     }
 
     //Get Dictionary Array
@@ -118,7 +147,6 @@
     );
 
     foreach ($arParams["FILTER"] as $filterField) {
-        //arshow($filterField);
         $filter = array("id"=>$filterField["id"],"name"=>$filterField["name"], "type" => $filterField["type"], "params"=>$filterField["params"]);
         if ($filterField["items"]) {
             $filter["items"] = $filterField["items"]; 
@@ -126,8 +154,7 @@
         $arResult["FILTER"][] = $filter;
 
     }
-    //arshow($arParams["FILTER"], true);
-    //arshow($arResult["FILTER"]);
+
 
     $arParams["TICKETS_PER_PAGE"] = (intval($arParams["TICKETS_PER_PAGE"]) <= 0 ? 50 : intval($arParams["TICKETS_PER_PAGE"]));
 
@@ -138,7 +165,6 @@
 
     $aFilter = $grid_options->GetFilter($arResult["FILTER"]); 
 
-    //arshow($aFilter);
 
 
     if ($_GET["filter"] != "" && $_GET["clear_filter"] != "Y") {
@@ -157,9 +183,6 @@
     if ($aFilter["OWNER"] > 0) {
         $aFilter["OWNER_EXACT_MATCH"] = "Y"; 
     } 
-
-
-    // arshow($aFilter, true);  
 
     //перебираем все фильтруемые значения и пересобираем маасивы в строки. для всех свойств кроме индикатора (LAMP)
     foreach ($aFilter as $key=> $filterE) {
@@ -361,6 +384,9 @@
             ),
         );
 
+
+        $arResult["FULL_TICKET_LIST"][$arTicket["ID"]] = $arTicket["ID"];
+
         if(!empty($ticketTestList[$arTicket["ID"]])){
             $arTicket["NEED_TESTING"]='Y';
         } else {
@@ -379,9 +405,7 @@
     $arResult["SORT"] = $aSort["sort"];
     $arResult["SORT_VARS"] = $aSort["vars"];
 
-    $arResult["NAV_OBJECT"] = $rsTickets;
-
-
+    $arResult["NAV_OBJECT"] = $rsTickets;          
 
 
     // rewrite for old templates
@@ -394,6 +418,25 @@
     }
 
 
+    //check ticket plan
+    $ticket_plan = new GKSupportTicketPlan;
+    $ticket_plan_list = $ticket_plan->GetList($by = "ID", $sort = "ASC", array());
+    while($arTicketPlan = $ticket_plan_list->Fetch()) {
+        $arResult["TICKET_PLAN"][$arTicketPlan["TICKET_ID"]] = $arTicketPlan["TICKET_ID"];
+    }
+
+    //check ticket plan log
+    foreach ($arResult["FULL_TICKET_LIST"] as $ID) {
+        $ticket_plan_log = new GKSupportTicketPlanLog;
+        $rsTicketPlanLog = $ticket_plan_log->GetList($by = "ID", $sort = "DESC", $arFilter = array("TICKET_ID" => $ID));
+        while ($arTicketlog = $rsTicketPlanLog->Fetch()) {
+            $arTicketlog["DATE"] = str_replace(" ", "<br>", $arTicketlog["DATE"]);
+            $user = $arResult["STAFF_LIST"][$arTicketlog["USER_ID"]];
+            $arTicketlog["USER"] = $user["NAME"]."<br>".$user["LAST_NAME"]; 
+           
+            $arResult["TICKET_PLAN_LOG"][$ID][] = $arTicketlog;
+        }    
+    }      
 
     $this->IncludeComponentTemplate();
 ?>

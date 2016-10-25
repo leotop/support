@@ -15,7 +15,7 @@ $MESS["SUP_ALL"] = "(все)";
 $MESS["SUP_F_MESSAGE"] = "Текст сообщения";
 $MESS["SUP_F_SET_FILTER"] = "Установить";
 $MESS["SUP_F_DEL_FILTER"] = "Сбросить";
-$MESS["SUP_LAMP"] = "Индикатор";
+$MESS["SUP_LAMP"] = "Инд.";
 $MESS["SUP_TITLE"] = "Заголовок";
 $MESS["SUP_TIMESTAMP"] = "Изменено";
 $MESS["SUP_MODIFIED_BY"] = "Кто изменил";
@@ -39,4 +39,5 @@ $MESS["SUP_CRITICALITY"] = "Критичность";
 $MESS["SUP_DATE_CREATE"] = "Дата создания";
 $MESS["SUP_OWNER"] = "Кем создан"; 
 $MESS["SUP_TESTING"] = "Требуется тестирование";   
+$MESS["SUP_PLAN"] = "План";
 ?>

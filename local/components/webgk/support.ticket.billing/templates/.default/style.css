@@ -30,3 +30,7 @@
 .serviceField {
     background: #FFE5AB !important;
 }
+
+.billingTotal {
+    font-weight: bold;
+}

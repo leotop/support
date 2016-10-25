@@ -30,8 +30,6 @@
 
 <?if(!empty($arParams["FILTER"])):?>
 
-<?//arshow($arParams["FILTER_TEMPLATE_NAME"])?>
-
     <?$APPLICATION->IncludeComponent(
             "bitrix:main.interface.filter",
             $arParams["FILTER_TEMPLATE_NAME"],
@@ -133,18 +131,23 @@
                             }
                         }
                     }
-                   // arshow($aRow, true);
 
                 ?>
-                <tr oncontextmenu="return bxGrid_<?=$arParams["GRID_ID"]?>.oActions[<?=$index?>]"<?if($sDefAction <> ''):?> ondblclick="<?=htmlspecialcharsbx($sDefAction)?>" title="<?=GetMessage("interface_grid_dblclick")?><?=$sDefTitle?>"<?endif?>>
+                <?
+                    $tdClass = "";
+                    if (in_array($aRow["data"]["ID"], $arParams["TICKET_PLAN"]) && $arParams["IS_STAFF"] == "Y") {
+                        $tdClass = "ticket-in-plan"; 
+                    }
+                ?>
+                <tr id="ticket-row-<?=$aRow["data"]["ID"]?>" oncontextmenu="return bxGrid_<?=$arParams["GRID_ID"]?>.oActions[<?=$index?>]"<?if($sDefAction <> ''):?> ondblclick="<?=htmlspecialcharsbx($sDefAction)?>" title="<?=GetMessage("interface_grid_dblclick")?><?=$sDefTitle?>"<?endif?>>
                     <?if($arResult["ALLOW_EDIT"]):?>
                         <?
                             if($aRow["editable"] !== false):
                                 $data_id = ($aRow["id"] <> ''? $aRow["id"] : $aRow["data"]["ID"]);
                             ?>
-                            <td class="bx-checkbox-col"><input type="checkbox" name="ID[]" id="ID_<?=$data_id?>" value="<?=$data_id?>" title="<?echo GetMessage("interface_grid_check")?>"></td>
+                            <td class="bx-checkbox-col <?=$tdClass?>"><input type="checkbox" name="ID[]" id="ID_<?=$data_id?>" value="<?=$data_id?>" title="<?echo GetMessage("interface_grid_check")?>"></td>
                             <?else:?>
-                            <td class="bx-checkbox-col">&nbsp;</td>
+                            <td class="bx-checkbox-col <?=$tdClass?>">&nbsp;</td>
                             <?endif?>
                         <?endif?>
                     <?if(is_array($aRow["actions"]) && count($aRow["actions"]) > 0):?>
@@ -152,22 +155,19 @@
                             onclick="bxGrid_<?=$arParams["GRID_ID"]?>.ShowActionMenu(this, <?=$index?>);"
                         title="<?echo GetMessage("interface_grid_act")?>" class="bx-action"><div class="empty"></div></a></td> */?>
                         <?else:?>
-                        <td>&nbsp;</td>
+                        <td <?=$tdClass?>>&nbsp;</td>
                         <?endif?>
                     <?
                         $aRow["data"]["TITLE"] = "<a href=".$aRow["data"]["TICKET_EDIT_URL"]." class='ticket_link' >".$aRow["data"]["TITLE"]."</a>";
                     ?>
-                     <?
-                         //arshow($arResult["HEADERS"], true);
-                     ?>
                     <?foreach($arResult["HEADERS"] as $id=>$header):?>
-                   
+
                         <td<?=($header["sort_state"] <> ''? ' class="bx-sorted"':'')?><?
                                 if($header["align"] <> '')
                                     echo ' align="'.$header["align"].'"';
                                 elseif($header["type"] == "checkbox")
                                     echo ' align="center"';
-                            ?>><?
+                            ?> class="<?=$tdClass?>"><?
                                 if($header["type"] == "checkbox"
                                     && strlen($aRow["data"][$id]) > 0
                                     && ($aRow["data"][$id] == 'Y' || $aRow["data"][$id] == 'N')
@@ -175,23 +175,62 @@
                                 {
                                     echo ($aRow["data"][$id] == 'Y'? GetMessage("interface_grid_yes"):GetMessage("interface_grid_no"));
                                 } else if ($id=="NEED_TESTING") { 
-                                    ?>
-                                 <input type='checkbox' <? if ($aRow["data"]["NEED_TESTING"]=='Y') { echo 'checked';}?> id="ticketTest<?=$aRow["data"]["ID"]?>" onChange="changeTicketTestParam(<?=$aRow["data"]["ID"]?>)"/>                                       
-                                <?}
-                                else
-                                {
+                                ?>
+                                <input type='checkbox' <? if ($aRow["data"]["NEED_TESTING"]=='Y') { echo 'checked';}?> id="ticketTest<?=$aRow["data"]["ID"]?>" onChange="changeTicketTestParam(<?=$aRow["data"]["ID"]?>)"/>                                       
+                                <?} else if ($id=="SUP_PLAN") {?>
+                                <div class="ticket-plan-wrapper">   
+                                    <div>
+                                        <?if (in_array($aRow["data"]["ID"], $arParams["TICKET_PLAN"])) {?> 
+                                            <div class="ticket-plan plan-yes ticket-plan-block js-ticket-plan-control" title="<?=GetMessage("REMOVE_FROM_PLAN")?>">&#150;</div>   
+                                            <div class="ticket_plan_popup">
+                                                <div class="ticket-tracking-close">&#10006;</div>
+                                                <p style="color: red;"><?=GetMessage("REASON_OF_CANCEL")?></p>
+                                                <textarea class="js-ticket-plan-comment ticket-plan-update-text-<?=$aRow["data"]["ID"]?>"></textarea>                                                 
+                                                <button data-ticket-id="<?=$aRow["data"]["ID"]?>" data-action="DELETE" disabled="disabled" class="js-add-ticket-plan-comment" type="button"><?=GetMessage("CANCEL_TICKET_PLAN")?></button>
+                                            </div>    
+
+                                            <?} else {?>                                                          
+                                            <div class="ticket-plan plan-no ticket-plan-block js-add-to-plan" title="<?=GetMessage("ADD_TO_PLAN")?>" data-ticket-id="<?=$aRow["data"]["ID"]?>">&#10010;</div>                                                                                    
+                                            <?}?>
+                                    </div>  
+                                    <div>
+                                        <div class="ticket-plan-history ticket-plan-block js-ticket-plan-control" title="<?=GetMessage("SHOW_HISTORY")?>">i</div>                                       
+                                        <div class="ticket_plan_popup">
+                                            <div class="ticket-tracking-close">&#10006;</div>
+                                            <p style="color: green;"><?=GetMessage("TICKET_PLAN_HISTORY")?></p>
+                                            <textarea class="js-ticket-plan-comment ticket-plan-update-text-<?=$aRow["data"]["ID"]?>"></textarea>                                                 
+                                            <button data-ticket-id="<?=$aRow["data"]["ID"]?>" data-action="UPDATE" disabled="disabled" class="js-add-ticket-plan-comment" type="button"><?=GetMessage("ADD_TICKET_COMMENT")?></button>
+
+                                            <?if (!empty($arParams["TICKET_PLAN_LOG"][$aRow["data"]["ID"]])) {?>
+                                            <hr />
+                                                <div class="popup-ticket-log-container">
+                                                    <table class="popup-ticket-log-table">
+                                                        <?foreach ($arParams["TICKET_PLAN_LOG"][$aRow["data"]["ID"]] as $log_item) {?>
+                                                            <tr>
+                                                                <td width="80"><?=$log_item["DATE"]?></td>
+                                                                <td width="100"><?=$log_item["USER"]?></td>
+                                                                <td width="50"><?=$log_item["ACTION"]?></td>
+                                                                <td><?=$log_item["COMMENT"]?></td>
+                                                            </tr>
+                                                            <?}?>
+                                                    </table>
+                                                </div>
+                                                <?}?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?} else {
                                     $pattern = "/\s?\[\d+\]\s?/m";
                                     $replacement = "";                                        
 
                                     $aRow["data"][$id] = preg_replace($pattern, '', $aRow["data"][$id]);
-                                    //$aRow["data"][$id] = str_replace('Неизвестный пользователь', '', $aRow["data"][$id]);
 
 
                                     $val = (isset($aRow["columns"][$id])? $aRow["columns"][$id] : $aRow["data"][$id]);
                                     //echo '1';
                                     echo ($val <> ''? $val:'&nbsp;');
                                 }                                  
-                               
+
                         ?></td>
                         <?endforeach?>
                 </tr>
@@ -764,7 +803,7 @@
             type: "GET",
             url: url,
             data: { ticketID: ticketID,
-                    checked: checked,    
+                checked: checked,    
             }
         }).done(function(strResult) {
         }).error(function() {
