@@ -11,16 +11,28 @@
         Cmodule::IncludeModule("webgk.support"); 
         $suppostGroups = GKSupport::GetBitrixSupportGroup();
 
+        //список клиентов
         $arFilter = array();       
-        $items = array(""=>"-");
+        $items = array(""=>" - ");
 
         $clients = GKSupportUsers::GetList($by="ID",$sort="ASC",array("ACTIVE"=>"Y"));
         while($arClient = $clients->Fetch()) {
             $project = $arClient["PROJECT_NAME"];
-            if($suppostGroups[$arClient["USER_ID"]]) {
-                $project = "[".GetMessage("GROUP")." ".$suppostGroups[$arClient["USER_ID"]]."] ".$project;
-            }        
-            $items[$arClient["USER_ID"]] = $project;
+            //добавляем пользователей без группы
+            if(!$suppostGroups[$arClient["USER_ID"]]) {                        
+                $items[$arClient["USER_ID"]] = $project;
+            }     
+        }
+
+        //добавляем группы пользователей
+        $support_groups = GKSupport::GetBitrixSupportGroupInfo();
+        if (is_array($support_groups["GROUPS"]) && count($support_groups["GROUPS"]) > 0) {
+            foreach ($support_groups["GROUPS"] as $g_id => $group) {
+                if ($group["IS_TEAM_GROUP"] != "Y") {
+                    //у группы добавляем префикс "g", чтобы отличать их при фильтрации
+                    $items["g".$g_id] = " [".GetMessage("GROUP")."] ".$group["NAME"];
+                }
+            }     
         }
 
 
@@ -30,8 +42,10 @@
             "name" => GetMessage("PROJECT"),           
             "type" => "list",
             "items" => $items, 
-        );   
+        );      
 
+
+        //список ответственных
         $users = array(""=>"-");
         $user = CUser::GetList(($by="name"), ($order="asc"), array("GROUPS_ID"=>array($supportGroupId), "ACTIVE"=>"Y"));   
         while ($arUser = $user->Fetch()){
@@ -62,17 +76,17 @@
     );    
 ?>    
 <?$APPLICATION->IncludeComponent("bitrix:menu", "deskmanMenu", Array(
-    "ROOT_MENU_TYPE" => "deskman",    
-    "MENU_CACHE_TYPE" => "N",    
-    "MENU_CACHE_TIME" => "3600",    
-    "MENU_CACHE_USE_GROUPS" => "Y",    
-    "MENU_CACHE_GET_VARS" => "",    
-    "MAX_LEVEL" => "1",    
-    "CHILD_MENU_TYPE" => "",    
-    "USE_EXT" => "Y",    
-    ),
-    false
-); 
+        "ROOT_MENU_TYPE" => "deskman",    
+        "MENU_CACHE_TYPE" => "N",    
+        "MENU_CACHE_TIME" => "3600",    
+        "MENU_CACHE_USE_GROUPS" => "Y",    
+        "MENU_CACHE_GET_VARS" => "",    
+        "MAX_LEVEL" => "1",    
+        "CHILD_MENU_TYPE" => "",    
+        "USE_EXT" => "Y",    
+        ),
+        false
+    ); 
 ?>                            
 <?$APPLICATION->IncludeComponent(
         "webgk:support.ticket.list", 

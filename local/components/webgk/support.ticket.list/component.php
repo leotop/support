@@ -67,7 +67,7 @@
     if ($supportStaff===true) {
         $arResult["IS_STAFF"]='Y';
     }
-    
+
     $staff_user_list = CUser::GetList($by = "ID", $sort = "ASC", array("GROUPS_ID" => $supportStaffGroupID));
     while($arUser = $staff_user_list->Fetch()) {
         $arResult["STAFF_LIST"][$arUser["ID"]] = $arUser;
@@ -167,10 +167,6 @@
 
 
 
-    if ($_GET["filter"] != "" && $_GET["clear_filter"] != "Y") {
-        //  foreach ($)
-    }  
-
     $aSortVal = $aSort['sort'];
     $sort_order = current($aSortVal);
     $sort_by = key($aSortVal);
@@ -202,19 +198,12 @@
 
     $aFilter["RESPONSIBLE_EXACT_MATCH"] = "Y";
 
-    /*   //хак для символьного кода статуса
-    if (is_array($aFilter["STATUS_SID"])) {
-    $statusSID = "";
-    foreach ($aFilter["STATUS_SID"] as $k=>$sid) {
-    if ($k > 0) {
-    $statusSID .= "|";
-    } 
-    $statusSID .= $sid;
-    }
-    $aFilter["STATUS_SID"] = $statusSID;
-    }   */
 
-
+    //если фильтруем по группе
+    if (!empty($aFilter["OWNER"]) && substr($aFilter["OWNER"], 0, 1) == "g") {
+        $aFilter["CLIENT_GROUP_ID"] = str_replace("g", "", $aFilter["OWNER"]);    
+        unset($aFilter["OWNER"]);
+    }             
 
     //  $aFilter = array();
     $rsTickets = CTicket::GetList(
@@ -433,7 +422,7 @@
             $arTicketlog["DATE"] = str_replace(" ", "<br>", $arTicketlog["DATE"]);
             $user = $arResult["STAFF_LIST"][$arTicketlog["USER_ID"]];
             $arTicketlog["USER"] = $user["NAME"]."<br>".$user["LAST_NAME"]; 
-           
+
             $arResult["TICKET_PLAN_LOG"][$ID][] = $arTicketlog;
         }    
     }      
